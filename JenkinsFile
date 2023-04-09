@@ -1,0 +1,25 @@
+pipeline{
+    agent any
+    stages{
+        stage("building"){
+            steps{
+                echo "========stage building ========"
+                sh "docker build -t mar97/laravel_app ."
+            }
+        }
+
+        stage("push to image"){
+            steps{
+                script{
+                    echo "========stage deployment ========"
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+                        sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
+                        sh "docker push mar97/laravel_app:1.0"
+                    }
+
+                }   
+            }
+        }
+    }
+    
+}
