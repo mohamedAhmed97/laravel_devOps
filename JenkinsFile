@@ -4,7 +4,7 @@ pipeline{
         stage("building"){
             steps{
                 echo "========stage building ========"
-                sh "docker build -t mar97/laravel_app ."
+                sh "docker build -t mar97/laravel_app:1.0 ."
             }
         }
 
